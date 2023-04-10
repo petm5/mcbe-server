@@ -1,0 +1,11 @@
+#!/bin/sh
+
+mc=/usr/local/bin/mc
+snap="cheesecraft"
+
+id="$1"
+
+$mc stop
+$mc backup "Restore #$id"
+snapper -c "$snap" undochange $id..0
+$mc start
