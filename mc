@@ -1,20 +1,40 @@
 #!/bin/sh
 
-su_mc="sudo -i -u mcbe --"
+user=mcbe
+
+if [ "$(whoami)" != "$user" ]; then
+exec sudo -i -u $user -- $0 $@
+exit
+fi
+
 container="minecraft-server"
 man=podman
 snap="cheesecraft"
 
+help_msg () {
+cat <<EOF
+ console  -  Connect the current terminal to the Bedrock server console
+ comm     -  Run a command on the Bedrock server console
+ start    -  Start the server
+ stop     -  Stop the server
+ restart  -  Restart the server
+ logs     -  View the server logs
+ backup   -  Create a backup of the world and server config (Takes comment as argument)
+ backups  -  View the list of available backups
+ restore  -  Restore a backup (Takes number as argument)
+EOF
+}
+
 case "$1" in
 comm)
 shift
-$su_mc $man exec "$container" send-command $@
+$man exec "$container" send-command $@
 ;;
-console) $su_mc $man attach "$container";;
-start) $su_mc $man start "$container";;
-stop) $su_mc $man stop "$container";;
-restart) $su_mc $man restart "$container";;
-logs) $su_mc $man logs "$container" | less +G -R;;
+console) $man attach "$container";;
+start) $man start "$container";;
+stop) $man stop "$container";;
+restart) $man restart "$container";;
+logs) $man logs "$container" | less +G -R;;
 backup)
 shift
 if [ -z "$@" ]; then
@@ -33,19 +53,14 @@ fi
 echo Restoring backup "#"$id
 sudo /usr/local/bin/mc_restore "$id"
 ;;
+"")
+echo Usage
+echo -----
+help_msg
+;;
 *)
 echo Invalid command
 echo ---------------
-cat <<EOF
- console  -  Connect the current terminal to the Bedrock server console
- comm     -  Run a command on the Bedrock server console
- start    -  Start the server
- stop     -  Stop the server
- restart  -  Restart the server
- logs     -  View the server logs
- backup   -  Create a backup of the world and server config (Takes comment as argument)
- backups  -  View the list of available backups
- restore  -  Restore a backup (Takes number as argument)
-EOF
+help_msg
 ;;
 esac
