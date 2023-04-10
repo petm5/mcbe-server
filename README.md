@@ -6,7 +6,7 @@ The scripts and configs do not support multiple servers for now, and are set up 
 
 # Usage
 
-The Minecraft server is managed by the user `mcbe`, and all users added to the `mcbe` group have permission to manage the server. The `mc` command with an action as its second parameter is used for all administration tasks.
+The Minecraft server is run by the user `mcbe`, and all users added to the `mcbe` group have permission to perform administrative tasks. The `mc` command with an action as its second parameter is used for all administration tasks.
 
 | Command | Action |
 | ------- | --- |
