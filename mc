@@ -3,7 +3,7 @@
 user=mcbe
 
 if [ "$(whoami)" != "$user" ]; then
-exec sudo -i -u $user -- $0 $@
+exec sudo -u $user -- "$0" $@
 exit
 fi
 
@@ -24,6 +24,8 @@ cat <<EOF
  restore  -  Restore a backup (Takes number as argument)
 EOF
 }
+
+cd /home/$user
 
 case "$1" in
 comm)
