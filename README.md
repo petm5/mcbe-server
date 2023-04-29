@@ -6,9 +6,9 @@ The scripts and configs do not support multiple servers for now, and are set up 
 
 # Usage
 
-The Minecraft server is run by the user `mcbe`, and all users added to the `mcbe` group have permission to perform administrative tasks. The `mc` command with an action as its second parameter is used for all administration tasks.
+The Minecraft server is run in a rootless Podman container by the user `mcbe`, and all users added to the `mcbe` group have permission to perform administrative tasks. The `mc` command with an action as its second parameter is used for all administration tasks.
 
-| Command | Action |
+| Action  | Description |
 | ------- | --- |
 | console | Connect the current terminal to the Bedrock server console. Equivalent to `podman attach` as the `mcbe` user. |
 | comm    | Run a command on the Bedrock server console |
